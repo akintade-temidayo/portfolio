@@ -9,10 +9,25 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch('https://formspree.io/f/xaqgnoaz', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(e.target),
+    });
+
+    if (response.ok) {
+      setSubmitted(true);
+    } else {
+      alert('Something went wrong. Please try again.');
+    }
+  } catch (error) {
+    alert('Something went wrong. Please try again.');
+  }
+};
 
   return (
     <section id="contact" className="bg-[#F8FAFC] py-20">
